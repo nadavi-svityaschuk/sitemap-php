@@ -5,7 +5,7 @@ namespace SitemapPHP;
 /**
  * Sitemap
  *
- * This class used for generating Google Sitemap files
+ * This class used for generating Google Sitemap files. Updated by Svityaschuk.
  *
  * @package    Sitemap
  * @author     Osman Üngür <osmanungur@gmail.com>
