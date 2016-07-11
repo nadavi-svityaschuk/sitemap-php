@@ -259,7 +259,7 @@ class Sitemap {
 	public function startIndexSitemap() {
 
 		$this->setWriter(new \XMLWriter());
-		$this->getWriter()->openURI($this->getPath() . $this->getFilename());
+		$this->getWriter()->openURI($this->getPath() . $this->getFilename() . self::EXT);
 		$this->getWriter()->startDocument('1.0', 'UTF-8');
 		$this->getWriter()->setIndent(true);
 		$this->getWriter()->startElement('sitemapindex');
