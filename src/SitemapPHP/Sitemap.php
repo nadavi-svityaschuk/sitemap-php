@@ -8,7 +8,8 @@ namespace SitemapPHP;
  * This class used for generating Google Sitemap files. Updated by Svityaschuk.
  *
  * @package    Sitemap
- * @author     Osman Üngür <osmanungur@gmail.com>
+ * @author     Aleksey Svityaschuk <svityashchuk.oleksiy@gmail.com>
+ * @copyright  2016-2016 Aleksey Svityaschuk
  * @copyright  2009-2015 Osman Üngür
  * @copyright  2012-2015 Evert Pot (http://evertpot.com/)
  * @license    http://opensource.org/licenses/MIT MIT License
@@ -258,11 +259,7 @@ class Sitemap {
 	public function startIndexSitemap() {
 
 		$this->setWriter(new \XMLWriter());
-		if ($this->getCurrentSitemap()) {
-			$this->getWriter()->openURI($this->getPath() . $this->getFilename() . self::SEPERATOR . $this->getCurrentSitemap() . self::EXT);
-		} else {
-			$this->getWriter()->openURI($this->getPath() . $this->getFilename() . self::EXT);
-		}
+		$this->getWriter()->openURI($this->getPath() . $this->getFilename());
 		$this->getWriter()->startDocument('1.0', 'UTF-8');
 		$this->getWriter()->setIndent(true);
 		$this->getWriter()->startElement('sitemapindex');
