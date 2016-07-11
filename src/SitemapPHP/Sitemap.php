@@ -280,7 +280,7 @@ class Sitemap {
 			$this->startIndexSitemap();
 		}
 		$this->getWriter()->startElement('sitemap');
-		$this->getWriter()->writeElement('loc', $loc . $filename . self::EXT);
+		$this->getWriter()->writeElement('loc', $loc . $filename);
 		$this->getWriter()->writeElement('lastmod', $this->getLastModifiedDate($lastmod));
 		$this->getWriter()->endElement();
 	}
