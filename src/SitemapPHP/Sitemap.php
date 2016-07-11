@@ -267,6 +267,13 @@ class Sitemap {
 	}
 
 
+	/**
+	 * Add element of index-sitemap
+	 *
+	 * @param $loc
+	 * @param $filename
+	 * @param string $lastmod
+     */
 	public function addIndexSitemapItem($loc, $filename, $lastmod = 'Today')
 	{
 		if (!($this->getWriter() instanceof \XMLWriter)) {
@@ -277,11 +284,4 @@ class Sitemap {
 		$this->getWriter()->writeElement('lastmod', $this->getLastModifiedDate($lastmod));
 		$this->getWriter()->endElement();
 	}
-
-	public function endIndexSitemap()
-	{
-		$this->getWriter()->endElement();
-		$this->getWriter()->endDocument();
-	}
-
 }
