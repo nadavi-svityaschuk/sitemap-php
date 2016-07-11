@@ -46,6 +46,7 @@ class Sitemap {
 	 * Sets root path of the website, starting with http:// or https://
 	 *
 	 * @param string $domain
+	 * @return $this
 	 */
 	public function setDomain($domain) {
 		$this->domain = $domain;
@@ -173,8 +174,8 @@ class Sitemap {
 	/**
 	 * Adds an item to sitemap
 	 *
-	 * @param string $loc URL of the page. This value must be less than 2,048 characters. 
-	 * @param string|null $priority The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0.
+	 * @param string $loc URL of the page. This value must be less than 2,048 characters.
+	 * @param float|null|string $priority The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0.
 	 * @param string|null $changefreq How frequently the page is likely to change. Valid values are always, hourly, daily, weekly, monthly, yearly and never.
 	 * @param string|int|null $lastmod The date of last modification of url. Unix timestamp or any English textual datetime description.
 	 * @return Sitemap
@@ -219,7 +220,7 @@ class Sitemap {
 	 * Finalizes tags of sitemap XML document.
 	 *
 	 */
-	private function endSitemap() {
+	public function endSitemap() {
 		if (!$this->getWriter()) {
 			$this->startSitemap();
 		}
@@ -249,6 +250,41 @@ class Sitemap {
 		}
 		$indexwriter->endElement();
 		$indexwriter->endDocument();
+	}
+
+	/**
+	 * Start of custom sitemap
+     */
+	public function startIndexSitemap() {
+
+		$this->setWriter(new \XMLWriter());
+		if ($this->getCurrentSitemap()) {
+			$this->getWriter()->openURI($this->getPath() . $this->getFilename() . self::SEPERATOR . $this->getCurrentSitemap() . self::EXT);
+		} else {
+			$this->getWriter()->openURI($this->getPath() . $this->getFilename() . self::EXT);
+		}
+		$this->getWriter()->startDocument('1.0', 'UTF-8');
+		$this->getWriter()->setIndent(true);
+		$this->getWriter()->startElement('sitemapindex');
+		$this->getWriter()->writeAttribute('xmlns', self::SCHEMA);
+	}
+
+
+	public function addIndexSitemapItem($loc, $filename, $lastmod = 'Today')
+	{
+		if (!($this->getWriter() instanceof \XMLWriter)) {
+			$this->startIndexSitemap();
+		}
+		$this->getWriter()->startElement('sitemap');
+		$this->getWriter()->writeElement('loc', $loc . $filename . self::EXT);
+		$this->getWriter()->writeElement('lastmod', $this->getLastModifiedDate($lastmod));
+		$this->getWriter()->endElement();
+	}
+
+	public function endIndexSitemap()
+	{
+		$this->getWriter()->endElement();
+		$this->getWriter()->endDocument();
 	}
 
 }
